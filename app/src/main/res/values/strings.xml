@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Цена вопроса</string>
+    <string name="auth_activity_auth">Авторизация</string>
+    <string name="auth_activity_set_phone">Введите номер телефона</string>
+    <string name="auth_activity_7">+7&#160;</string>
+    <string name="auth_activity_login">Войти</string>
+    <string name="auth_activity_robot_wait">Вам в ближайшее время поступит звонок от робота.</string>
+    <string name="auth_activity_need_input_4_number">Необходимо ввести 4 последние цифры входящего номера.</string>
+    <string name="auth_activity_input_4_number">Введите последние 4 цифры</string>
+    <string name="auth_activity_7_000_000">+7 000 000&#160;</string>
+    <string name="auth_activity_1234">12 34</string>
+    <string name="auth_activity_image_phone_description">Иконка телефона</string>
+    <string name="auth_activity_robot_wait_with_phone">"Вам в ближайшее время поступит звонок от робота на номер "</string>
+    <string name="auth_activity_wait">Пожалуйста подождите...</string>
+
 </resources>
