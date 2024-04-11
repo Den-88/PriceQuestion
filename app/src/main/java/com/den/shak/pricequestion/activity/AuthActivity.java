@@ -4,6 +4,7 @@ import static com.den.shak.pricequestion.cloud.GetUser.getUserData;
 import static com.den.shak.pricequestion.cloud.VoiceAuth.sendVoiceAuth;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -139,7 +140,7 @@ public class AuthActivity extends AppCompatActivity implements VoiceAuth.VoiceAu
                     // Запросить подтверждение выхода
                     exitRequested = true;
                     View rootView = findViewById(android.R.id.content);
-                    Snackbar.make(rootView, "Нажмите еще раз для выхода", Snackbar.LENGTH_SHORT)
+                    Snackbar.make(rootView, R.string.press_to_exit_text, Snackbar.LENGTH_SHORT)
                             .show();
 
                     // Через какое-то время сбросьте состояние запроса на выход (например, через 2 секунды)
@@ -167,6 +168,11 @@ public class AuthActivity extends AppCompatActivity implements VoiceAuth.VoiceAu
         TextInputEditText inputCode = findViewById(R.id.code_input);
         final String input_code = String.valueOf(inputCode.getText());
         if (input_code.equals(auth_code)) {
+            Button login_button_2 = findViewById(R.id.login_button_2);
+            login_button_2.setEnabled(false);
+            TextInputLayout codeLayout = findViewById(R.id.code_layout);
+            codeLayout.setError(null);
+
             SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("phone", phone);
@@ -177,7 +183,7 @@ public class AuthActivity extends AppCompatActivity implements VoiceAuth.VoiceAu
             thread.start();
         } else {
             TextInputLayout codeLayout = findViewById(R.id.code_layout);
-            codeLayout.setError("Неверный код! Повторите попытку!");
+            codeLayout.setError(getString(R.string.auth_activity_code_error));
 
         }
     }
@@ -219,17 +225,31 @@ public class AuthActivity extends AppCompatActivity implements VoiceAuth.VoiceAu
 
     @Override
     public void onGetUserResult(User user) {
+        // Метод, вызываемый при получении результата о пользователе.
+        // Принимает объект User в качестве параметра.
+
+        // Запускаем выполнение метода handleGetUserResult(user) на главном потоке UI.
         runOnUiThread(() -> handleGetUserResult(user));
     }
 
     private void handleGetUserResult(User user) {
+        // Метод обработки результата получения информации о пользователе.
+        // Принимает объект User в качестве параметра.
+
+        // Проверяем, не является ли user null.
         if (user != null) {
+            // Если пользователь не null, сохраняем его идентификатор в SharedPreferences.
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString("id", user.getId());
             editor.apply();
+            // Записываем сообщение в лог для отладки.
             Log.d("GetUserResult", "+++");
+        } else {
+            // Если пользователь null, перенаправляем пользователя на активити регистрации.
+            Intent intent = new Intent(this, RegActivity.class);
+            intent.putExtra("phone", phone);
+            startActivity(intent);
         }
-        //TODO Если пользователь не null, то переходим на главный экран, иначе к регистрации
     }
 }
 

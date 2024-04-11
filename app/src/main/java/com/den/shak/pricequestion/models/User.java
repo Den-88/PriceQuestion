@@ -4,6 +4,7 @@ public class User {
     private String id;
     private String phone;
     private String name;
+    private Boolean isPerformer;
 
     // Геттер для поля id
     public String getId() {
@@ -33,5 +34,15 @@ public class User {
     // Сеттер для поля name
     public void setName(String name) {
         this.name = name;
+    }
+
+    // Геттер для поля isPerformer
+    public Boolean isPerformer() {
+        return isPerformer;
+    }
+
+    // Сеттер для поля isPerformer
+    public void setPerformer(Boolean isPerformer) {
+        this.isPerformer = isPerformer;
     }
 }
