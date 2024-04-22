@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/list_advert_fragment">
+
+    <fragment
+        android:id="@+id/list_advert_fragment"
+        android:name="com.den.shak.pricequestion.fragments.ListAdvertFragment"
+        android:label="@string/list_advert_fragment_list_advert">
+        <action
+            android:id="@+id/action_to_list_advert_fragment"
+            app:destination="@id/list_advert_fragment" />
+        <action
+            android:id="@+id/action_to_new_advert"
+            app:destination="@id/new_advert" />
+        <action
+            android:id="@+id/action_to_chat"
+            app:destination="@id/chat" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/new_advert"
+        android:name="com.den.shak.pricequestion.fragments.NewAdvert"
+        android:label="@string/new_advert_fragment_new_advert" >
+        <action
+            android:id="@+id/action_to_list_advert_fragment"
+            app:destination="@id/list_advert_fragment" />
+        <action
+            android:id="@+id/action_to_new_advert"
+            app:destination="@id/new_advert" />
+        <action
+            android:id="@+id/action_to_chat"
+            app:destination="@id/chat" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/chat"
+        android:name="com.den.shak.pricequestion.fragments.ChatFragment"
+        android:label="@string/chat_fragment_chat" >
+        <action
+            android:id="@+id/action_to_list_advert_fragment"
+            app:destination="@id/list_advert_fragment" />
+        <action
+            android:id="@+id/action_to_new_advert"
+            app:destination="@id/new_advert" />
+        <action
+            android:id="@+id/action_to_chat"
+            app:destination="@id/chat" />
+    </fragment>
+
+</navigation>
+
+

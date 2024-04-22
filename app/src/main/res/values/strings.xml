@@ -21,5 +21,16 @@
     <string name="reg_activity_reg_button">Зарегистрироваться</string>
     <string name="reg_activity_help_text">Активируйте данный переключатель, есливы хотите выполнять услуги.\nВ данном случае вам будут достуны функции для работы с опубликованными заявками.</string>
     <string name="reg_activity_user_name_error">Имя не должно быть пустым</string>
+    <string name="settings_activity_back">Назад</string>
+    <string name="settings_activity_settings">Настройки</string>
+    <string name="chat_fragment_chat">Чат</string>
+    <string name="list_advert_fragment_list_advert">Список заявок</string>
+    <string name="new_advert_fragment_new_advert">Новая заявка</string>
+    <string name="menu_about_app">О приложении</string>
+    <string name="menu_settings">Настройки</string>
+    <string name="menu">Меню</string>
+    <string name="menu_version">"Версия "</string>
+    <string name="menu_developer">\nРазработчик: Шакуров Денис</string>
+    <string name="ok">OK</string>
 
 </resources>

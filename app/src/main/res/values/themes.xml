@@ -5,5 +5,5 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.ЦенаВопроса" parent="Base.Theme.ЦенаВопроса" />
+    <style name="Theme.PriceQuestion" parent="Base.Theme.ЦенаВопроса" />
 </resources>

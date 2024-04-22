@@ -243,7 +243,9 @@ public class AuthActivity extends AppCompatActivity implements VoiceAuth.VoiceAu
             editor.putString("id", user.getId());
             editor.apply();
             // Записываем сообщение в лог для отладки.
-            Log.d("GetUserResult", "+++");
+            Intent intent = new Intent(this, MainActivity.class);
+//            intent.putExtra("user", user);
+            startActivity(intent);
         } else {
             // Если пользователь null, перенаправляем пользователя на активити регистрации.
             Intent intent = new Intent(this, RegActivity.class);

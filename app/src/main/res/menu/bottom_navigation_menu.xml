@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/list_advert_fragment"
+        android:icon="@drawable/ic_list"
+        android:title="@string/list_advert_fragment_list_advert"/>
+    <item
+        android:id="@+id/new_advert"
+        android:icon="@drawable/ic_add"
+        android:title="@string/new_advert_fragment_new_advert"/>
+    <item
+        android:id="@+id/chat"
+        android:icon="@drawable/ic_chat"
+        android:title="@string/chat_fragment_chat"/>
+</menu>
