@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:isScrollContainer="true"
-    tools:context=".activity.AuthActivity">
+    tools:context="com.den.shak.pq.activity.AuthActivity">
 
     <LinearLayout
         android:id="@+id/auth_layout_wait"

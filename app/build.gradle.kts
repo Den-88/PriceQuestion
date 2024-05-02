@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.den.shak.pricequestion"
+    namespace = "com.den.shak.pq"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.den.shak.pricequestion"
+        applicationId = "com.den.shak.pq"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -39,7 +39,13 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation(libs.play.services.maps)
+    implementation(libs.camera.lifecycle)
+    implementation(libs.camera.view)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation(libs.maps.mobile)
+    implementation(libs.camera.camera2)
+    implementation(libs.aws.android.sdk.s3)
 }
