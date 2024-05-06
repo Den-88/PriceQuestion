@@ -47,7 +47,7 @@ public class AuthActivity extends AppCompatActivity implements VoiceAuth.VoiceAu
             thread.start();
         } else {
             // Если ID пользователя не сохранён, отображаем форму ввода номера телефона
-            LinearLayout layout_wait = findViewById(R.id.auth_layout_wait);
+            LinearLayout layout_wait = findViewById(R.id.list_fragment_wait);
             layout_wait.setVisibility(View.GONE);
             LinearLayout layout_phone = findViewById(R.id.auth_layout_phone);
             layout_phone.setVisibility(View.VISIBLE);

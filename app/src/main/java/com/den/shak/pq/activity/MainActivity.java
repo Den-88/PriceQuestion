@@ -11,7 +11,6 @@ import android.widget.TextView;
 import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
-import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -26,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     // Флаг для отслеживания запроса на выход из приложения
     private boolean exitRequested = false;
     public static User current_user;
+
 
     @Override
     protected void onCreate(android.os.Bundle savedInstanceState) {

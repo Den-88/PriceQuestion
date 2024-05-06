@@ -3,10 +3,12 @@ package com.den.shak.pq.fragments;
 import static com.den.shak.pq.cloud.SetOrder.setOrder;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -80,6 +82,7 @@ public class NewAdvert extends Fragment implements SetOrder.SetOrderCallback {
     private TextInputLayout new_adverts_description_layout;
     private TextView new_adverts_description;
     private TextView new_adverts_price;
+    private TextView setLocationText;
     private Button button_set_coordinates;
     private Button button_take_photo;
     private Button button_choose_photo;
@@ -106,6 +109,7 @@ public class NewAdvert extends Fragment implements SetOrder.SetOrderCallback {
         button_set_coordinates = rootView.findViewById(R.id.new_adverts_button_set_coordinates);
         button_take_photo = rootView.findViewById(R.id.new_adverts_add_photo_button);
         button_choose_photo = rootView.findViewById(R.id.new_adverts_add_gallery_photo_button);
+        setLocationText = rootView.findViewById(R.id.new_adverts_set_location_text);
         Button button_create_order = rootView.findViewById(R.id.new_adverts_button_create_order);
 
         // Инициализация предустановленных вариантов категорий
@@ -131,6 +135,7 @@ public class NewAdvert extends Fragment implements SetOrder.SetOrderCallback {
         return rootView;
     }
 
+    @SuppressLint("PrivateResource")
     @Override
     public void onResume() {
         super.onResume();
@@ -141,6 +146,15 @@ public class NewAdvert extends Fragment implements SetOrder.SetOrderCallback {
             // Если координаты установлены, отображаем соответствующий текст и меняем текст кнопки
             text_position_seted.setVisibility(View.VISIBLE);
             button_set_coordinates.setText("Изменить местоположение");
+
+            int currentNightMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+            boolean isDarkTheme = currentNightMode == Configuration.UI_MODE_NIGHT_YES;
+            if (isDarkTheme) {
+                setLocationText.setTextColor(ContextCompat.getColorStateList(requireContext(), com.google.android.material.R.color.m3_dark_default_color_secondary_text));
+            } else {
+                setLocationText.setTextColor(ContextCompat.getColorStateList(requireContext(), com.google.android.material.R.color.m3_default_color_secondary_text));
+            }
+
         } else {
             // Если координаты не установлены, скрываем текст и меняем текст кнопки
             text_position_seted.setVisibility(View.GONE);
@@ -511,6 +525,7 @@ public class NewAdvert extends Fragment implements SetOrder.SetOrderCallback {
     }
 
     // Метод для создания новой заявки
+    @SuppressLint("PrivateResource")
     private void createOrder() {
         // Получаем значения полей для создания заявки
         String category = new_adverts_category.getText().toString().trim();
@@ -530,6 +545,10 @@ public class NewAdvert extends Fragment implements SetOrder.SetOrderCallback {
         if (description.isEmpty()) {
             new_adverts_description_layout.setError(getString(R.string.new_adert_not_be_empty));
             check_passed = false;
+        }
+        if (order.getLocation() == null) {
+            check_passed = false;
+            setLocationText.setTextColor(ContextCompat.getColorStateList(requireContext(), com.google.android.material.R.color.design_error));
         }
 
         // Если все поля заполнены, создаем заявку

@@ -48,4 +48,6 @@ dependencies {
     implementation(libs.maps.mobile)
     implementation(libs.camera.camera2)
     implementation(libs.aws.android.sdk.s3)
+    implementation(libs.picasso)
+
 }

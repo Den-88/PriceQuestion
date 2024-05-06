@@ -1,26 +1,33 @@
 package com.den.shak.pq.activity;
 
 import static com.den.shak.pq.ConfigReader.setMapKitApiKey;
-import static com.den.shak.pq.fragments.NewAdvert.order;
+import static com.den.shak.pq.activity.MapActivity.mapInitialized;
+import static com.den.shak.pq.fragments.ListAdvertFragment.isFiltered;
+import static com.den.shak.pq.fragments.ListAdvertFragment.ordersList;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.den.shak.pq.R;
-import com.google.android.gms.maps.model.LatLng;
+import com.den.shak.pq.models.Order;
+import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
@@ -28,8 +35,8 @@ import com.yandex.mapkit.geometry.Point;
 import com.yandex.mapkit.layers.ObjectEvent;
 import com.yandex.mapkit.map.CameraPosition;
 import com.yandex.mapkit.map.IconStyle;
-import com.yandex.mapkit.map.InputListener;
 import com.yandex.mapkit.map.Map;
+import com.yandex.mapkit.map.MapObjectTapListener;
 import com.yandex.mapkit.map.PlacemarkMapObject;
 import com.yandex.mapkit.map.VisibleRegionUtils;
 import com.yandex.mapkit.mapview.MapView;
@@ -45,21 +52,20 @@ import com.yandex.mapkit.user_location.UserLocationView;
 import com.yandex.runtime.Error;
 import com.yandex.runtime.image.ImageProvider;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
-
-public class MapActivity extends AppCompatActivity implements InputListener {
+public class MapSearchActivity extends AppCompatActivity {
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
-    public static boolean mapInitialized = false;
     private boolean userLocationSet = false;
     private MapView mapView;
     private Map map;
     private UserLocationLayer userLocationLayer;
-    private PlacemarkMapObject mark;
+    private MapObjectTapListener tapListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Инициализация MapKit, если необходимо
         if (!mapInitialized) {
             initializeMapKit();
@@ -73,9 +79,6 @@ public class MapActivity extends AppCompatActivity implements InputListener {
 
         // Создаем экземпляр Map и устанавливаем его на MapView
         map = mapView.getMapWindow().getMap();
-
-        // Устанавливаем слушатель нажатий на карту
-        map.addInputListener(this);
 
         // Проверка разрешения на местоположение
         if (ContextCompat.checkSelfPermission(this,
@@ -92,11 +95,17 @@ public class MapActivity extends AppCompatActivity implements InputListener {
 
         }
 
-        // Инициализация маркера
-        mark = map.getMapObjects().addPlacemark();
-
         // Настройка поиска
         setSearch();
+        setMarkers();
+
+        TextView toolbarTitle = findViewById(R.id.map_toolbar_text);
+        toolbarTitle.setText("Выберите маркер");
+
+        if (isFiltered) {
+            MaterialCardView mapFilterCard = findViewById(R.id.map_filter_card);
+            mapFilterCard.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -126,34 +135,54 @@ public class MapActivity extends AppCompatActivity implements InputListener {
         }
     }
 
-    // Обработка нажатия на карту
-    @Override
-    public void onMapTap(@NonNull Map map, @NonNull Point point) {
-        // Установка маркера на точку нажатия
-        mark.setGeometry(point);
-        ImageProvider icon = ImageProvider.fromResource(this, R.drawable.marker);
-        mark.setIcon(icon);
-        mark.setIconStyle(
-                new IconStyle().setScale(0.5f)
-        );
+    private void setMarkers() {
+                    // Добавляем новый обработчик нажатия на маркер
+        tapListener = (mapObject, point) -> {
+                Order order = (Order) mapObject.getUserData();
+                // Создаем диалоговое окно при нажатии на маркер
+                MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+                assert order != null;
+                List<String> categories = Arrays.asList(getResources().getStringArray(R.array.category));
+                builder.setTitle(categories.get(order.getCategoryID()));
+                if (order.getPrice() != null) {
+                    builder.setMessage(order.getTitle() + "\nОплата за выполнене: " + order.getPrice() + " руб.");
+                } else {
+                    builder.setMessage(order.getTitle());
+                }
 
-        // Установка местоположения заказа
-        Button done_button = findViewById(R.id.map_done_button);
-        done_button.setVisibility(View.VISIBLE);
-    }
-    // Обработка долгого нажатия на карту
-    @Override
-    public void onMapLongTap(@NonNull Map map, @NonNull Point point) {
+                builder.setPositiveButton("Открыть заявку", (dialog, which) -> {
+                    dialog.dismiss();
+                    Intent intent = new Intent(this, OrderActivity.class);
+                    intent.putExtra("order_id", order.getId());
+                    // Если необходимо, передайте информацию о заказе через Intent
+                    startActivity(intent);
+                });
+                // Добавляем кнопку "Закрыть"
+                builder.setNegativeButton("Отмена", (dialog, which) -> dialog.dismiss());
+
+                // Показываем диалоговое окно
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.RED);
+
+                // Возвращаем true, чтобы сообщить, что событие обработано
+                return true;
+            };
+        for (Order order : ordersList) {
+            Point point = new Point(order.getLocation().latitude, order.getLocation().longitude);
+            PlacemarkMapObject mark = map.getMapObjects().addPlacemark();
+            mark.setGeometry(point);
+            ImageProvider icon = ImageProvider.fromResource(this, R.drawable.marker);
+            mark.setIcon(icon);
+            mark.setIconStyle(new IconStyle().setScale(0.5f));
+
+            mark.setUserData(order);
+            mark.addTapListener(tapListener);
+        }
     }
 
     // Обработка нажатия на кнопку "Назад"
     public void onClickBack(View view) {
-        // Закрытие активности
-        finish();
-    }
-    // Обработка нажатия на кнопку "Готово"
-    public void onClickDone(View view) {
-        order.setLocation(new LatLng(mark.getGeometry().getLatitude(), mark.getGeometry().getLongitude()));
         // Закрытие активности
         finish();
     }
@@ -294,3 +323,4 @@ public class MapActivity extends AppCompatActivity implements InputListener {
         });
     }
 }
+

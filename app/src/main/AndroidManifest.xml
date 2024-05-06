@@ -33,6 +33,10 @@
         <activity android:name="com.den.shak.pq.activity.MainActivity" />
         <activity android:name="com.den.shak.pq.activity.SettingsActivity" />
         <activity android:name="com.den.shak.pq.activity.MapActivity" />
+        <activity android:name="com.den.shak.pq.activity.OrderActivity" />
+        <activity android:name="com.den.shak.pq.activity.FilterActivity" />
+        <activity android:name="com.den.shak.pq.activity.MapSearchActivity" />
+
     </application>
 
     <queries>

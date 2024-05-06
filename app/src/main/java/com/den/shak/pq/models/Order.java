@@ -1,5 +1,7 @@
 package com.den.shak.pq.models;
 
+import android.util.Log;
+
 import com.google.android.gms.maps.model.LatLng;
 
 public class Order {
@@ -35,7 +37,9 @@ public class Order {
         return price;
     }
     public LatLng getLocation() {
+        Log.d("Location---", String.valueOf(location));
         return location;
+
     }
 
     // Сеттеры
@@ -60,5 +64,6 @@ public class Order {
     }
     public void setLocation(LatLng location) {
         this.location = location;
+        Log.d("Location+++", String.valueOf(location));
     }
 }
