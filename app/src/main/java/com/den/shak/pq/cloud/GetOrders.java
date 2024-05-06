@@ -83,6 +83,9 @@ public class GetOrders {
 
                                 Order order = new Order();
                                 order.setId(jsonObject.getString("id"));
+                                if (!jsonObject.isNull("user_id")) {
+                                    order.setUserID(jsonObject.getString("user_id"));
+                                }
                                 order.setTitle(jsonObject.getString("title"));
                                 if (!jsonObject.isNull("description")) {
                                     order.setDescription(jsonObject.getString("description"));

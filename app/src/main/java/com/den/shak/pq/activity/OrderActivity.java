@@ -1,17 +1,22 @@
 package com.den.shak.pq.activity;
 
 import static com.den.shak.pq.ConfigReader.setMapKitApiKey;
+import static com.den.shak.pq.activity.MainActivity.current_user;
 import static com.den.shak.pq.activity.MapActivity.mapInitialized;
+import static com.den.shak.pq.cloud.DeleteOrder.deleteOrder;
 import static com.den.shak.pq.cloud.GetOrders.getOrdersData;
 import static com.den.shak.pq.cloud.GetPhotos.getPhotosData;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -20,10 +25,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.den.shak.pq.R;
 import com.den.shak.pq.adapters.PhotoAdapterURL;
+import com.den.shak.pq.cloud.DeleteOrder;
 import com.den.shak.pq.cloud.GetOrders;
 import com.den.shak.pq.cloud.GetPhotos;
 import com.den.shak.pq.models.Order;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.geometry.Point;
@@ -38,9 +45,12 @@ import java.util.List;
 import java.util.Objects;
 
 // Определение класса OrderActivity, расширяющего AppCompatActivity
-public class OrderActivity extends AppCompatActivity implements GetOrders.GetOrdersCallback, GetPhotos.GetPhotosCallback {
+public class OrderActivity extends AppCompatActivity implements GetOrders.GetOrdersCallback, GetPhotos.GetPhotosCallback, DeleteOrder.DeleteOrderCallback {
     private MapView mapView;
     private Map map;
+    private Order order;
+
+    private Button order_delete_button;
 
     // Переопределение метода onCreate, вызываемого при создании активности
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +113,7 @@ public class OrderActivity extends AppCompatActivity implements GetOrders.GetOrd
     // Переопределение метода обратного вызова получения данных о заказах
     public void onGetOrdersResult(List<Order> orders) {
         // Получение первого заказа из списка
-        Order order = orders.get(0);
+        order = orders.get(0);
         // Получение ссылок на элементы интерфейса
         TextView toolbarTitle = findViewById(R.id.order_toolbar_text);
         TextView title = findViewById(R.id.order_title);
@@ -143,6 +153,15 @@ public class OrderActivity extends AppCompatActivity implements GetOrders.GetOrd
                 new Animation(Animation.Type.SMOOTH, 1),
                 null
         );
+
+
+        if (Objects.equals(order.getUserID(), current_user.getId())) {
+            order_delete_button = findViewById(R.id.order_delete_button);
+            order_delete_button.setVisibility(View.VISIBLE);
+        } else if (current_user.isPerformer()) {
+            Button order_respone_button = findViewById(R.id.order_respone_button);
+            order_respone_button.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -161,5 +180,30 @@ public class OrderActivity extends AppCompatActivity implements GetOrders.GetOrd
             recyclerView.setLayoutManager(layoutManager);
             recyclerView.setAdapter(photoAdapter);
         }
+    }
+
+    public void onClickDelete(View view) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+        builder.setTitle(R.string.order_confirm_delete)
+                .setMessage(R.string.order_confirm_delete_text)
+                .setPositiveButton(R.string.order_delete_yes, (dialog, which) -> {
+                    order_delete_button.setEnabled(false);
+                    // Пользователь подтвердил удаление, вызываем метод для удаления заказа
+                    deleteOrder(order, OrderActivity.this, OrderActivity.this);
+                })
+                .setNegativeButton(R.string.order_delete_cancel, (dialog, which) -> {
+                    // Пользователь отменил удаление, закрываем диалог
+                    dialog.dismiss();
+                });
+
+        // Показываем диалоговое окно
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.RED);
+    }
+
+    @Override
+    public void onDeleteOrderResult() {
+        finish();
     }
 }

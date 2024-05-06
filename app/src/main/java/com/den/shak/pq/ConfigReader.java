@@ -197,4 +197,21 @@ public class ConfigReader {
         // Возвращаем null, если чтение не удалось
         return null;
     }
+
+    public static String deleteOrderGatewayUrl(Context context) {
+    Properties properties = new Properties();
+    try {
+        // Открываем поток для чтения файла config.properties из ресурсов приложения
+        InputStream inputStream = context.getResources().openRawResource(R.raw.config);
+        // Загружаем свойства из файла в объект Properties
+        properties.load(inputStream);
+        // Возвращаем значение свойства "DELETE_ORDER_GATEWAY_URL"
+        return properties.getProperty("DELETE_ORDER_GATEWAY_URL");
+    } catch (IOException e) {
+        // Если произошла ошибка при чтении файла, логируем её
+        Log.e(TAG, "Error reading config file", e);
+    }
+    // Возвращаем null, если чтение не удалось
+    return null;
+}
 }

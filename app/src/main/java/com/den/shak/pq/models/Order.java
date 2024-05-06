@@ -6,6 +6,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class Order {
     private String id;
+    private String user_id;
     private int category_id;
     private String title;
     private String description;
@@ -19,6 +20,10 @@ public class Order {
     // Геттеры
     public String getId() {
         return id;
+    }
+
+    public String getUserID() {
+        return user_id;
     }
 
     public int getCategoryID() {
@@ -45,6 +50,10 @@ public class Order {
     // Сеттеры
     public void setId(String id) {
         this.id = id;
+    }
+
+    public void setUserID(String user_id) {
+        this.user_id = user_id;
     }
 
     public void setCategory(int category_id) {

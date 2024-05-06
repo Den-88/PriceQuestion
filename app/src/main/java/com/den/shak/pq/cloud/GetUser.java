@@ -69,6 +69,7 @@ public class GetUser {
                             JSONObject jsonResponse = new JSONArray(response.toString()).getJSONObject(0);
                             User user = new User();
                             user.setId(jsonResponse.getString("id"));
+                            user.setPerformer(jsonResponse.getBoolean("isPerformer"));
                             user.setPhone(jsonResponse.getString("phone"));
                             user.setName(jsonResponse.getString("name"));
                             // Вызываем колбэк с результатами

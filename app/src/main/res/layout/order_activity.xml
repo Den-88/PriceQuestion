@@ -181,4 +181,28 @@
 
     </com.google.android.material.card.MaterialCardView>
 
+    <Button
+        android:id="@+id/order_delete_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:backgroundTint="#F44336"
+        android:onClick="onClickDelete"
+        android:text="@string/order_delete_button"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/order_photo_card" />
+
+    <Button
+        android:id="@+id/order_respone_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/order_response_button"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/order_delete_button" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

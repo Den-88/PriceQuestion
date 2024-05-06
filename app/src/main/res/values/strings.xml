@@ -82,5 +82,11 @@
     <string name="order_price">Цена</string>
     <string name="order_waiting">Подождите</string>
     <string name="map_filter_filter_seted">Применён фильтр по категориям</string>
+    <string name="order_confirm_delete">Подтвердите удаление</string>
+    <string name="order_confirm_delete_text">Вы уверены, что хотите удалить этот заказ?</string>
+    <string name="order_delete_yes">Да</string>
+    <string name="order_delete_cancel">Отмена</string>
+    <string name="order_delete_button">Удалить заявку</string>
+    <string name="order_response_button">Откликнуться</string>
 
 </resources>
