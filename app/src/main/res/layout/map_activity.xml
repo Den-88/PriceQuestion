@@ -118,7 +118,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:visibility="visible"
-        app:boxBackgroundColor="?attr/colorPrimaryFixed"
+        app:boxBackgroundColor="?android:attr/textColorPrimaryInverse"
         app:expandedHintEnabled="false"
         app:hintAnimationEnabled="false"
         app:hintEnabled="false"

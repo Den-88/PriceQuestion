@@ -23,7 +23,7 @@
     <string name="reg_activity_user_name_error">Имя не должно быть пустым</string>
     <string name="settings_activity_back">Назад</string>
     <string name="settings_activity_settings">Настройки</string>
-    <string name="chat_fragment_chat">Чат</string>
+    <string name="chat_fragment_chat">Отклики</string>
     <string name="list_advert_fragment_list_advert">Список заявок</string>
     <string name="new_advert_fragment_new_advert">Новая заявка</string>
     <string name="menu_about_app">О приложении</string>
@@ -88,5 +88,29 @@
     <string name="order_delete_cancel">Отмена</string>
     <string name="order_delete_button">Удалить заявку</string>
     <string name="order_response_button">Откликнуться</string>
+    <string name="chat_my_responses">Мои отклики</string>
+    <string name="chat_for_me_responses">Отклики на мои заявки</string>
+    <string name="chat_no_responses">Нет откликов</string>
+    <string name="response_dilog_response_text">Текст отклика</string>
+    <string name="response_dilog_price">Цена, руб</string>
+    <string name="chat_my_response">Мой отклик</string>
+    <string name="chat_allow">Принято</string>
+    <string name="chat_decline">Отклонено</string>
+    <string name="chat_on_wait">На рассмотрении</string>
+    <string name="chat_response_text">"Текст отклика: "</string>
+    <string name="chat_see_order">Посмотреть заявку</string>
+    <string name="chat_my_price">"\nМоя цена: "</string>
+    <string name="chat_rub_and_status">" руб. \nСтатус: "</string>
+    <string name="chat_name">"\nИмя заказчика: "</string>
+    <string name="chat_price">"\nПредложенная цена: "</string>
+    <string name="chat_status_on_wait">" руб. \nСтатус: На рассмотрении"</string>
+    <string name="chat_cancel">Отмена</string>
+    <string name="chat_call">Позвонить заказчику</string>
+    <string name="chat_response_for_me">Отклик на мою заявку</string>
+    <string name="chat_allow_response">Принять отклик</string>
+    <string name="chat_decline_response">Отклонить отклик</string>
+    <string name="chat_allowed">Принято</string>
+    <string name="chat_declined">Отклонено</string>
+    <string name="setting_exit">Выйти из аккаунта</string>
 
 </resources>

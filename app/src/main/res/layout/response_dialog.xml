@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/response_dialog_text_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="8dp"
+        android:paddingTop="16dp"
+        android:paddingRight="8dp"
+        app:counterEnabled="true"
+        app:counterMaxLength="300">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/response_dialog_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/response_dilog_response_text"
+            android:maxLength="300" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/response_dialog_price_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="8dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/response_dialog_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:digits="0123456789"
+            android:hint="@string/response_dilog_price"
+            android:inputType="numberDecimal"
+            android:maxLength="7" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

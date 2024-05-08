@@ -213,5 +213,38 @@ public class ConfigReader {
     }
     // Возвращаем null, если чтение не удалось
     return null;
-}
+    }
+
+    public static String setResponseGatewayUrl(Context context) {
+    Properties properties = new Properties();
+    try {
+        // Открываем поток для чтения файла config.properties из ресурсов приложения
+        InputStream inputStream = context.getResources().openRawResource(R.raw.config);
+        // Загружаем свойства из файла в объект Properties
+        properties.load(inputStream);
+        // Возвращаем значение свойства "SET_RESPONSE_GATEWAY_URL"
+        return properties.getProperty("SET_RESPONSE_GATEWAY_URL");
+    } catch (IOException e) {
+        // Если произошла ошибка при чтении файла, логируем её
+        Log.e(TAG, "Error reading config file", e);
+    }
+    // Возвращаем null, если чтение не удалось
+    return null;
+    }
+    public static String getResponsesGatewayUrl(Context context) {
+        Properties properties = new Properties();
+        try {
+            // Открываем поток для чтения файла config.properties из ресурсов приложения
+            InputStream inputStream = context.getResources().openRawResource(R.raw.config);
+            // Загружаем свойства из файла в объект Properties
+            properties.load(inputStream);
+            // Возвращаем значение свойства "GET_RESPONSES_GATEWAY_URL"
+            return properties.getProperty("GET_RESPONSES_GATEWAY_URL");
+        } catch (IOException e) {
+            // Если произошла ошибка при чтении файла, логируем её
+            Log.e(TAG, "Error reading config file", e);
+        }
+        // Возвращаем null, если чтение не удалось
+        return null;
+    }
 }

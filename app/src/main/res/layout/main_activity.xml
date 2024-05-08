@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="@string/list_advert_fragment_list_advert"
-            android:textColor="@android:color/white"
+            android:textColor="@color/white"
             android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

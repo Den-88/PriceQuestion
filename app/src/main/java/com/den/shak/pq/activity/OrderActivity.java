@@ -28,9 +28,13 @@ import com.den.shak.pq.adapters.PhotoAdapterURL;
 import com.den.shak.pq.cloud.DeleteOrder;
 import com.den.shak.pq.cloud.GetOrders;
 import com.den.shak.pq.cloud.GetPhotos;
+import com.den.shak.pq.cloud.SetResponse;
 import com.den.shak.pq.models.Order;
+import com.den.shak.pq.models.Response;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.yandex.mapkit.Animation;
 import com.yandex.mapkit.MapKitFactory;
 import com.yandex.mapkit.geometry.Point;
@@ -43,14 +47,15 @@ import com.yandex.runtime.image.ImageProvider;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 // Определение класса OrderActivity, расширяющего AppCompatActivity
-public class OrderActivity extends AppCompatActivity implements GetOrders.GetOrdersCallback, GetPhotos.GetPhotosCallback, DeleteOrder.DeleteOrderCallback {
+public class OrderActivity extends AppCompatActivity implements GetOrders.GetOrdersCallback, GetPhotos.GetPhotosCallback, DeleteOrder.DeleteOrderCallback, SetResponse.SetResponseCallback {
     private MapView mapView;
     private Map map;
     private Order order;
-
     private Button order_delete_button;
+    AlertDialog responseDialog;
 
     // Переопределение метода onCreate, вызываемого при создании активности
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +75,6 @@ public class OrderActivity extends AppCompatActivity implements GetOrders.GetOrd
         // Получение данных о заказах и фотографиях
         getOrdersData(null,orderId, null, null, OrderActivity.this, this);
         getPhotosData(orderId, OrderActivity.this, this);
-
 
         // Получаем ссылку на MapView из макета
         mapView = findViewById(R.id.order_map);
@@ -205,5 +209,63 @@ public class OrderActivity extends AppCompatActivity implements GetOrders.GetOrd
     @Override
     public void onDeleteOrderResult() {
         finish();
+    }
+
+    public void onClickResponse(View view) {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+        builder.setTitle("Откликнуться на заявку");
+        View dialogView = getLayoutInflater().inflate(R.layout.response_dialog, null);
+        builder.setView(dialogView);
+        builder.setPositiveButton("Откликнуться", null); // Сохраняем ссылку на кнопку
+        builder.setNegativeButton("Отмена", (dialog, which) -> dialog.dismiss());
+        builder.setCancelable(false);
+
+        // Показываем диалоговое окно
+        responseDialog = builder.create();
+        responseDialog.show();
+        responseDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.RED);
+        responseDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            TextInputLayout textLayout = dialogView.findViewById(R.id.response_dialog_text_layout);
+            TextInputLayout priceLayout = dialogView.findViewById(R.id.response_dialog_price_layout);
+            textLayout.setError(null);
+            priceLayout.setError(null);
+            TextInputEditText text = dialogView.findViewById(R.id.response_dialog_text);
+            TextInputEditText price = dialogView.findViewById(R.id.response_dialog_price);
+
+            if (Objects.requireNonNull(text.getText()).toString().isEmpty()) {
+                textLayout.setError("Поле не может быть пустым");
+            }
+            if (Objects.requireNonNull(price.getText()).toString().isEmpty()) {
+                priceLayout.setError("Поле не может быть пустым");
+            }
+
+            if (!Objects.requireNonNull(text.getText()).toString().isEmpty() && !Objects.requireNonNull(price.getText()).toString().isEmpty()) {
+                responseDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setEnabled(false);
+                responseDialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+                Response response = new Response();
+                UUID uuid = UUID.randomUUID();
+                response.setId(uuid.toString());
+                response.setIdOrder(order.getId());
+                response.setIdPerformer(current_user.getId());
+                response.setText(text.getText().toString());
+                response.setPrice(Integer.parseInt(price.getText().toString()));
+                SetResponse.setResponse(response, OrderActivity.this, OrderActivity.this);
+            }
+        });
+
+    }
+
+    @Override
+    public void onSetResponseResult() {
+        runOnUiThread(() -> {
+            responseDialog.dismiss();
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+            builder.setTitle("Отклик отправлен");
+            builder.setMessage("Ваш отклик успешно отправлен! Его можно посмотреть в разделе откликов.");
+            builder.setNegativeButton("ОК", (dialog, which) -> dialog.dismiss());
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        });
+
     }
 }

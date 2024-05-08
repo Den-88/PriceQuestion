@@ -10,8 +10,8 @@ android {
         applicationId = "com.den.shak.pq"
         minSdk = 24
         targetSdk = 34
-        versionCode = 1
-        versionName = "0.1 alpha"
+        versionCode = 4
+        versionName = "0.3.0 beta"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

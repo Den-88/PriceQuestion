@@ -42,17 +42,15 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <TextView
-        android:id="@+id/textView7"
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="174dp"
-        android:layout_marginTop="335dp"
-        android:layout_marginEnd="179dp"
-        android:layout_marginBottom="377dp"
-        android:text="В разработке"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FF1100"
+        android:onClick="onClickExit"
+        android:text="@string/setting_exit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/settings_toolbar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
