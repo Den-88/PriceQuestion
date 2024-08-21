@@ -20,6 +20,11 @@
 - **Хранение файлов:** Yandex Object Storage
 - **Картография:** Yandex MapKit
 
+## Ссылка на Google Play
+
+Вы можете скачать и установить приложение "Цена вопроса" через [Google Play Store](https://play.google.com/store/apps/details?id=com.den.shak.pq).
+
+
 ## Скриншоты
 
 Ниже представлены скриншоты приложения "Цена вопроса":
