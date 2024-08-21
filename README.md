@@ -24,33 +24,18 @@
 
 Ниже представлены скриншоты приложения "Цена вопроса":
 
-<div style="display: flex; flex-wrap: wrap; gap: 10px;">
-
-  <div style="flex: 1; min-width: 30%;">
-    <img src="images/1.png" style="width: 100%;">
-  </div>
-
-  <div style="flex: 1; min-width: 30%;">
-    <img src="images/2.png" style="width: 100%;">
-  </div>
-
-  <div style="flex: 1; min-width: 30%;">
-    <img src="images/3.png" style="width: 100%;">
-  </div>
-
-  <div style="flex: 1; min-width: 30%;">
-    <img src="images/4.png" style="width: 100%;">
-  </div>
-
-  <div style="flex: 1; min-width: 30%;">
-    <img src="images/5.png" style="width: 100%;">
-  </div>
-
-  <div style="flex: 1; min-width: 30%;">
-    <img src="images/6.png" style="width: 100%;">
-  </div>
-</div>
-
+<table>
+  <tr>
+    <td><img src="images/1.png" alt="Скриншот 1" style="width: 100%;" /></td>
+    <td><img src="images/2.png" alt="Скриншот 2" style="width: 100%;" /></td>
+    <td><img src="images/3.png" alt="Скриншот 3" style="width: 100%;" /></td>
+  </tr>
+  <tr>
+    <td><img src="images/4.png" alt="Скриншот 4" style="width: 100%;" /></td>
+    <td><img src="images/5.png" alt="Скриншот 5" style="width: 100%;" /></td>
+    <td><img src="images/6.png" alt="Скриншот 6" style="width: 100%;" /></td>
+  </tr>
+</table>
 
 ## Инструкция по сборке проекта
 
